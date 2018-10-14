@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -197,3 +198,4 @@ static BYTE io_trap()
 	return((BYTE) 0);
 }
 
+#endif

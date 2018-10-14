@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -51,4 +52,5 @@ extern BYTE	*t_start, *t_end;
 
 #if defined(COHERENT) && !defined(_I386)
 extern char adr_err[];
+#endif
 #endif

@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -785,3 +786,4 @@ static long op_ldydn()		     /*	LD (IY+d),n */
 	return(19L);
 #endif
 }
+#endif

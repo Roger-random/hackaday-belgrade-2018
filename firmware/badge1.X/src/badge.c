@@ -115,11 +115,13 @@ volatile int8_t brk_key,stdio_src;
 extern volatile uint16_t bufsize;
 volatile uint32_t ticks;			// millisecond timer incremented in ISR
 
+
+#ifdef Z80
 extern const uint8_t ram_image[65536];
 extern const uint8_t b2_rom[2048];
 extern const uint8_t ram_init [30];
 extern uint8_t ram_disk[RAMDISK_SIZE];
-
+#endif
 
 int8_t disp_buffer[DISP_BUFFER_HIGH+1][DISP_BUFFER_WIDE];
 int8_t color_buffer[DISP_BUFFER_HIGH+1][DISP_BUFFER_WIDE];
@@ -320,12 +322,15 @@ void badge_menu(void)
 					menu_pointer = 0;
 					continue;
 					}
+#ifdef UBASIC                
 				if (strcmp(menu_buff,"1")==0)
 					{
 					video_clrscr();
 					init_basic();
 					while (1) loop_basic();
 					}
+#endif                
+#ifdef Z80                
 				else if (strcmp(menu_buff,"2")==0)
 					{
 					video_clrscr();
@@ -337,12 +342,16 @@ void badge_menu(void)
 					init_8080_basic();
 					while (1) loop_8080_basic();
 					}
+#endif                
+#ifdef TETRAPUZZ                
 				else if (strcmp(menu_buff,"4")==0)
 					{
 					enable_display_scanning(0); //Shut off auto-scanning of character buffer
 					tetrapuzz();
 					}
+#endif                
 				//B_BDG006		
+#ifdef Z80
 				else if (strcmp(menu_buff,"5")==0)
 					{
 					stdio_local_buffer_puts("c:\nzork1\n");
@@ -354,6 +363,7 @@ void badge_menu(void)
 					init_z80_cpm();
 					while (1) loop_z80_cpm();
 					}
+#endif
 				else if (strcmp(menu_buff,"6")==0)
 					{
 					init_userprog();
@@ -373,10 +383,12 @@ void badge_menu(void)
 						case 8: clear_flag = wisecrack("I am afraid I can't do that Dave", TEXT_LEFT,CRACK_Y, 0); break;
 						case 9: show_wrencher(); break;
 						case 10: play_mario_tune(); break;
+#ifdef SNAKE_GAME                        
 						case 11: 
 							handle_display = 0;
 							play_snake();
 							break;
+#endif                            
 						case 12: show_help(); while(1) { ;; };
 						default: clear_flag = random_crack(); break;
 						}
@@ -687,7 +699,7 @@ uint32_t millis(void)
 	{
 	return ticks;
 	}
-
+#ifdef Z80
 void init_8080_basic (void)
 	{
 	video_set_color(15,0);
@@ -721,7 +733,9 @@ void loop_z80_cpm (void)
 	cpu_error = NONE;
 	cpu();	
 	}
+#endif
 
+#ifdef UBASIC
 //B_BAS005
 void init_basic (void)
 	{
@@ -764,6 +778,7 @@ void loop_basic (void)
 			}
 	    }	
 	}
+#endif //UBASIC
 
 //B_BDG007
 void init_userprog (void)
@@ -800,6 +815,7 @@ uint16_t get_free_mem(uint8_t * prog, uint16_t max_mem)
 	return (max_mem-prog_len);
 	}
 
+#ifdef UBASIC
 //B_BAS008
 uint8_t add_prog_line (int8_t * line, int8_t * prog, int16_t linenum)
     {
@@ -1027,6 +1043,7 @@ uint8_t basic_load_program (uint8_t * data, uint8_t slot)
 	if (data[0] == 0xFF) data[0] = 0;
 	return 1;
 	}
+#endif //UBASIC
 
 void list_more (void)
 	{

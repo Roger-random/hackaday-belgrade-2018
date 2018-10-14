@@ -1,3 +1,4 @@
+#ifdef Z80
 #include "Z80/hwz.h"
 
 const unsigned char ram_init [30] = {0xff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x15,0x10};
@@ -32852,4 +32853,5 @@ const unsigned char rd_image2[ROMDISK2_SIZE] = {
 
 	};
 
+#endif
 #endif

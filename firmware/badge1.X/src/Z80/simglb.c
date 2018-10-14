@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -174,4 +175,5 @@ const int parrity[256] = {
 
 #if defined(COHERENT) && !defined(_I386)
 char adr_err[] = "address out of range";
+#endif
 #endif

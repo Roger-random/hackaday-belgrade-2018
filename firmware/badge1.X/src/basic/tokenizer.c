@@ -1,3 +1,4 @@
+#ifdef UBASIC
 /*
  * Copyright (c) 2006, Adam Dunkels
  * All rights reserved.
@@ -389,3 +390,4 @@ tokenizer_variable_num(void)
 	else return *ptr - 'A';
 	}
 /*---------------------------------------------------------------------------*/
+#endif

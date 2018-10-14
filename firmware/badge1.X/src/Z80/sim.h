@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -104,4 +105,5 @@ struct softbreak {			/* structure of a breakpoint */
 	int	sb_passcount;		/* pass counter of breakpoint */
 	int	sb_pass;		/* no. of pass to break */
 };
+#endif
 #endif

@@ -1,3 +1,4 @@
+#ifdef TETRAPUZZ
 #include <stdint.h>
 
 //Prototypes
@@ -32,3 +33,4 @@ void BOX_up(void);
 void BOX_dn(void);
 void BOX_lt(void);
 void BOX_rt(void);
+#endif

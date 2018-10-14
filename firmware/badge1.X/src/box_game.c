@@ -1,3 +1,4 @@
+#ifdef TETRAPUZZ
 #include "box_game.h"
 #include "hw.h"
 #include <stdint.h>
@@ -871,3 +872,4 @@ void BOX_rt(void)
 	BOX_write_piece();
 	BOX_update_screen();
 	}
+#endif

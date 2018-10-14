@@ -1,3 +1,4 @@
+#ifdef Z80
 static long op_rb0a()		;					
 static long op_rb0b()		;					
 static long op_rb0c()		;					
@@ -721,3 +722,4 @@ static void user_int();
 static do_step();
 
 void reload_cpm_warm (void);
+#endif

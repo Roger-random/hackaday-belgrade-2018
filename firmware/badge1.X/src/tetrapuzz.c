@@ -1,3 +1,5 @@
+#ifdef TETRAPUZZ
+
 #include "hw.h"
 #include "tetrapuzz.h"
 #include "box_game.h"
@@ -93,3 +95,5 @@ void tetrapuzz_gameover(void)
 	}
 	*/
 	}
+
+#endif

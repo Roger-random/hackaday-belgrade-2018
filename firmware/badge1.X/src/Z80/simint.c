@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -73,3 +74,4 @@ void quit_int()
 	cntl_bs++;
 #endif
 }
+#endif

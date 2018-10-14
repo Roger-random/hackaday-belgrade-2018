@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -3782,3 +3783,4 @@ static  long op_rst38()		     /*	RST 38 */
 	return(11L);
 #endif
 }
+#endif

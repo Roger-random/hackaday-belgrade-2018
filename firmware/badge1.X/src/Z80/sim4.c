@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -1262,3 +1263,4 @@ static long op_oprrd()		     /*	RRD (HL) */
 #endif
 }
 
+#endif

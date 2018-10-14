@@ -1,3 +1,4 @@
+#ifdef UBASIC
 /*
  * Copyright (c) 2006, Adam Dunkels
  * All rights reserved.
@@ -39,3 +40,4 @@ int ubasic_get_variable(int varnum);
 void ubasic_set_variable(int varum, int value);
 
 #endif /* __UBASIC_H__ */
+#endif

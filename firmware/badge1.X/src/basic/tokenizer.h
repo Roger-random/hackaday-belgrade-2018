@@ -1,3 +1,4 @@
+#ifdef UBASIC
 /*
  * Copyright (c) 2006, Adam Dunkels
  * All rights reserved.
@@ -106,3 +107,4 @@ int tokenizer_finished(void);
 void tokenizer_error_print(void);
 
 #endif /* __TOKENIZER_H__ */
+#endif

@@ -1,3 +1,5 @@
+#ifdef SNAKE_GAME                        
+
 #include "snake.h"
 #include "hw.h"
 #include "disp.h"
@@ -335,3 +337,5 @@ int play_snake(void)
 			}
 		}
 	}
+
+#endif

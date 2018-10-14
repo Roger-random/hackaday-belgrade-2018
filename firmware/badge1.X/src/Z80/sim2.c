@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -2950,3 +2951,4 @@ static long op_tb7hl()		     /*	BIT 7,(HL) */
 #endif
 }
 
+#endif

@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -703,3 +704,4 @@ static long op_srliyd(int data)	     /*	SRL (IY+d) */
 	return(23L);
 #endif
 }
+#endif

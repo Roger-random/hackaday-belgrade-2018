@@ -75,6 +75,7 @@ track = dat;
 disk_temp_pointer = 0;
 }
 
+#ifdef Z80
 uint8_t read_disk_byte (void)
 {
 uint8_t temp;
@@ -179,6 +180,7 @@ if (drive==6)
 	}
 disk_temp_pointer++;
 }
+#endif //Z80
 
 uint8_t fl_rdsr(void)
 {

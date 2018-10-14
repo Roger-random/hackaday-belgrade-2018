@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -703,3 +704,4 @@ register int data;
 	return(23L);
 #endif
 }
+#endif

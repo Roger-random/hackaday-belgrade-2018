@@ -1,3 +1,4 @@
+#ifdef Z80
 /*
  * Z80SIM  -  a	Z80-CPU	simulator
  *
@@ -79,3 +80,4 @@ getkey()
 	return(c);
 */
 }
+#endif

@@ -1,3 +1,4 @@
+#ifdef UBASIC
 /*
  * Copyright (c) 2006, Adam Dunkels
  * All rights reserved.
@@ -981,3 +982,4 @@ int ubasic_get_variable(int varnum)
 
 
 
+#endif

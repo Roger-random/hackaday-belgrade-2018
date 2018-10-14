@@ -450,7 +450,9 @@ void hw_init (void)
 	tft_fill_area(0,0,320,240,0);	//fill with black color
 	wait_ms(80);					//wait a moment to avoid flicker
 	LCD_BKLT = 0;					//turn backlight on
+#ifdef Z80    
 	fl_rst_pb();
+#endif
 
 	//if reset is after POR or manual reset, forget LED state
 	if ((RCONbits.BOR)|(RCONbits.EXTR)|(RCONbits.POR))
