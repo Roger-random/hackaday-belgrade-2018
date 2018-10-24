@@ -53,6 +53,7 @@ void user_program_loop(void)
 		get_stat = stdio_get(&char_out);
 		if (get_stat!=0)
 			{
+			flashlight();  /* Turn on all three LEDs */
 			/* Show which letter was pressed just as an example: */
 			/* Directly address color_buffer: first nibble is BG, second nibble is FG*/
 			color_buffer[16][8] = 0x1E;

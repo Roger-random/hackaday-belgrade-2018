@@ -93,6 +93,7 @@ enum {
   TOKENIZER_POKE,  
   TOKENIZER_CURSOR,
   TOKENIZER_KIN,
+  TOKENIZER_LUMOS,
 };
 
 void tokenizer_init(const char *program);

@@ -231,6 +231,13 @@ void set_led (uint8_t led_n, uint8_t led_v)
 		LED_B = led_v;	
 	}
 
+void flashlight ()
+	{
+	LED_R = 1;
+	LED_G = 1;
+	LED_B = 1;
+	}
+
 void sound_play_notes (uint8_t note1, uint8_t note2, uint8_t note3, uint16_t wait)
 	{
 	IEC0bits.T5IE = 0;		//sound is a bit shaky without this

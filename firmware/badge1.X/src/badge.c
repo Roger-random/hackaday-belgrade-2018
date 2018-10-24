@@ -359,6 +359,10 @@ void badge_menu(void)
 					init_userprog();
 					while (1) loop_userprog();
 					}	
+				else if (strcmp(menu_buff,"lumos")==0)
+					{
+					flashlight();
+					}
 				else
 					{
 					switch (get_command_index(hash(menu_buff)))

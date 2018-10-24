@@ -128,6 +128,8 @@ static const struct keyword_token keywords[] =
 		{"CURSOR", TOKENIZER_CURSOR},
 		{"KIN", TOKENIZER_KIN},
 		{"kin", TOKENIZER_KIN},
+		{"lumos", TOKENIZER_LUMOS},
+		{"LUMOS", TOKENIZER_LUMOS},
 //aliases
 		{"clr", TOKENIZER_CLRSCR},
 		{"CLR", TOKENIZER_CLRSCR},
