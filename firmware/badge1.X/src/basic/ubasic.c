@@ -678,6 +678,13 @@ static void led_statement(void)
 	tokenizer_next();
 	}
 /*---------------------------------------------------------------------------*/
+static void lumos_statement(void)
+	{
+	accept(TOKENIZER_LUMOS);
+	flashlight();
+	tokenizer_next();
+	}
+/*---------------------------------------------------------------------------*/
 static void color_statement(void)
 	{
 	int c1,c2;
@@ -900,6 +907,9 @@ static void statement(void)
 			break;
 		case TOKENIZER_LED:
 			led_statement();
+			break;
+		case TOKENIZER_LUMOS:
+			lumos_statement();
 			break;
 		case TOKENIZER_COLOR:
 			color_statement();
