@@ -11,6 +11,55 @@
 #include "nyancat2.h"
 #include "nyancat4.h"
 #include "nyancat8.h"
+#include "tune_player.h" // Mario theme music
+
+const unsigned char* mario_measures[9] = {
+    mario_main0,
+    mario_main1,
+    mario_main2,
+    mario_main3,
+    mario_clip0,
+    mario_clip1,
+    mario_clip2,
+    mario_clip3,
+    mario_clip4,
+};
+
+const uint8_t mario_state_measures[16] = {
+    0,4,5,4,5,6,7,6,1,6,7,6,2,8,3,8,
+};
+
+const uint8_t mario_state_next[16] = {
+    1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,
+};
+
+uint32_t play_next_note(uint8_t measure_index, uint8_t note_index, uint8_t *next_note)
+{
+    uint32_t duration = 0;
+    uint8_t  mario_index = 0;
+    uint8_t  voice_index = 0;
+
+    *next_note = 0;
+
+    if (measure_index > 8)
+    {
+        return duration;
+    }
+
+    mario_index = note_index * 4;
+    if (mario_index < mario_array_limits[measure_index])
+    {
+        for (voice_index = 0; voice_index < 3; voice_index++)
+        {
+            sound_set_note(mario_measures[measure_index][mario_index+voice_index],voice_index);
+        }
+
+        duration = mario_tempos[mario_measures[measure_index][mario_index+3]];
+        *next_note = note_index+1;
+    }
+
+    return duration;
+}
 
 void user_program_init(void)
 	{
@@ -23,28 +72,43 @@ void user_program_init(void)
 
 void user_program_loop(void)
 	{
-        /* Now do something interesting */
         enable_display_scanning(0); //Shut off auto-scanning of character buffer
         uint16_t x = 0;
         uint8_t y = 0;
 
+        // 320 pixels wide line, each 32-bit value in 0xNNRRGGBB format where
+        // NN = Not used, RR = 8-bit red, GG = 8-bit green, BB = 8-bit blue
         uint32_t line[320];
-        
+
         uint16_t i = 0;
         uint32_t pixel_idx = 0;
         uint16_t encoded_run = 0;
         uint32_t pal_entry = 0;
         uint16_t pal_run = 0;
         uint8_t frame_idx = 0;
-        
+
+        // Image scaling control. 1=full scale, 2=half scale, 4=quarter, etc.
         uint8_t multiplier = 1;
         uint8_t multiply_loop=0;
-        
+
+        // Animation speed control
         const uint8_t milliseconds_per_frame = 70;
         uint32_t time_for_next_frame = millis();
-        
+
+        // Audio playback control
+        // audio_state is the state machine that sequences measures into a song.
+        // Each measure has zero or more 'notes', different from sheet music notes.
+        // Each note is a set of three frequencies to be held fof a specific time.
+        uint32_t time_for_audio_update = millis();
+        uint8_t audio_state = 0;
+        uint8_t next_audio_state = 0;
+        uint8_t measure_index = 0;
+        uint8_t note_index = 0;
+        uint8_t next_note = 0;
+
         while(1) //Loop forever
         {
+            // Is it time for the next frame?
             if (millis() >= time_for_next_frame)
             {
                 time_for_next_frame += milliseconds_per_frame;
@@ -104,7 +168,33 @@ void user_program_loop(void)
                 }
                 frame_idx++;
             }
-            
+
+            // Is it time for the next audio update?
+            if (millis() >= time_for_audio_update)
+            {
+                if (audio_state != 0xFF)
+                {
+                    measure_index = mario_state_measures[audio_state];
+                    next_audio_state = mario_state_next[audio_state];
+
+                    time_for_audio_update += play_next_note(measure_index,note_index,&next_note);
+                    if (next_note==0)
+                    {
+                        audio_state = next_audio_state;
+                    }
+                    note_index = next_note;
+                }
+                else
+                {
+                    // Fallback - silence for 10 seconds.
+                    sound_set_note(0,0);
+                    sound_set_note(0,1);
+                    sound_set_note(0,2);
+                    time_for_audio_update += 10000;
+                }
+            }
+
+            // Check for specific keys that change our behavior.
             K_R1 = 0;
             
             if (K_C10==0) // '8' key is down
