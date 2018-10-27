@@ -27,6 +27,7 @@
       <itemPath>src/nyancat.h</itemPath>
       <itemPath>src/nyancat2.h</itemPath>
       <itemPath>src/nyancat4.h</itemPath>
+      <itemPath>src/nyancat8.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
