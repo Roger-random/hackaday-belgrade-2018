@@ -105,6 +105,7 @@ void user_program_loop(void)
     uint8_t measure_index = 0;
     uint8_t note_index = 0;
     uint8_t next_note = 0;
+    uint8_t mute = 0;
 
     while(1) //Loop forever
     {
@@ -197,21 +198,37 @@ void user_program_loop(void)
         // Check for specific keys that change our behavior.
         K_R1 = 0;
 
-        if (K_C10==0) // '8' key is down
+        if (K_C10==0) // '8' key uses animation at 1/8th resolution
         {
             multiplier=8;
         }
-        else if (K_C2==0) // '4' key is down
+        else if (K_C2==0) // '4' uses animation at 1/4th resolution
         {
             multiplier=4;
         }
-        else if (K_C3==0) // '2' key is down
+        else if (K_C3==0) // '2' uses animation at 1/2 resolution
         {
             multiplier=2;
         }
-        else if (K_C5==0) // '1' key is down
+        else if (K_C5==0) // '1' uses full resolution animation
         {
             multiplier=1;
+        }
+        else if (K_C9==0) // '0' immediately mutes music.
+        {
+            mute = 1;
+            sound_set_note(0,0);
+            sound_set_note(0,1);
+            sound_set_note(0,2);
+            audio_state = 0xFF;
+        }
+        else if (K_C6==0 && mute) // '9' will restart music if muted, otherwise no effect.
+        {
+            mute = 0;
+
+            time_for_audio_update = millis();
+            audio_state = 0;
+            note_index = 0;
         }
 
         K_R1 = 1;
