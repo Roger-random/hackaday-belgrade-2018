@@ -11,32 +11,212 @@
 #include "nyancat2.h"
 #include "nyancat4.h"
 #include "nyancat8.h"
-#include "tune_player.h" // Mario theme music
 
-const unsigned char* mario_measures[9] = {
-    mario_main0,
-    mario_main1,
-    mario_main2,
-    mario_main3,
-    mario_clip0,
-    mario_clip1,
-    mario_clip2,
-    mario_clip3,
-    mario_clip4,
+
+#define NYANCAT_SEQUENCES 16
+#define NYANCAT_MEASURES 9
+
+const uint8_t nyancat_durations[2] = {
+    125,
+    250,
 };
 
-const uint8_t mario_state_measures[16] = {
-    0,4,5,4,5,6,7,6,1,6,7,6,2,8,3,8,
+const uint8_t nyancat_measure_limits[NYANCAT_MEASURES] = {
+  44,60,56,48,52,56,52,52,52
 };
 
-const uint8_t mario_state_next[16] = {
-    1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,
+const uint8_t nyancat_measure0[44] = {
+    0,41,79,1,
+    0,53,81,1,
+
+    0,43,75,0,
+    0,43,76,0,
+    0,55,76,0,
+    0,55,72,0,
+
+    0,40,75,0,
+    0,40,74,0,
+    0,52,72,1,
+
+    0,45,72,1,
+    0,57,74,1,
+};
+
+const uint8_t nyancat_measure1[60] = {
+    0,38,75,1,
+    0,50,76,0,
+    0,50,74,0,
+
+    0,43,72,0,
+    0,43,74,0,
+    0,55,76,0,
+    0,55,79,0,
+
+    0,36,81,0,
+    0,36,76,0,
+    0,48,79,0,
+    0,48,74,0,
+
+    0,36,76,0,
+    0,36,72,0,
+    0,48,74,0,
+    0,48,72,0,
+};
+
+const uint8_t nyancat_measure2[56] = {
+    0,41,76,1,
+    0,53,79,1,
+
+    0,43,81,0,
+    0,43,76,0,
+    0,55,79,0,
+    0,55,74,0,
+
+    0,40,76,0,
+    0,40,72,0,
+    0,52,75,0,
+    0,52,76,0,
+
+    0,45,75,0,
+    0,45,74,0,
+    0,57,72,0,
+    0,57,74,0,
+};
+
+const uint8_t nyancat_measure3[48] = {
+    0,38,75,1,
+    0,50,72,0,
+    0,50,74,0,
+
+    0,43,76,0,
+    0,43,79,0,
+    0,55,74,0,
+    0,55,76,0,
+
+    0,36,74,0,
+    0,36,72,0,
+    0,48,74,1,
+
+    0,36,72,1,
+    0,48,74,1,
+};
+
+const uint8_t nyancat_measure4[52] = {
+    0,53,72,1,
+    0,57,67,1,
+
+    0,60,72,1,
+    0,65,67,0,
+    0,65,69,0,
+
+    0,52,72,0,
+    0,52,74,0,
+    0,55,76,0,
+    0,55,72,0,
+
+    0,60,77,0,
+    0,60,76,0,
+    0,64,77,0,
+    0,64,79,0,
+};
+
+const uint8_t nyancat_measure5[56] = {
+    0,50,72,1,
+    0,53,72,1,
+
+    0,57,67,0,
+    0,57,69,0,
+    0,62,72,0,
+    0,62,67,0,
+
+    0,48,77,0,
+    0,48,76,0,
+    0,52,74,0,
+    0,52,72,0,
+
+    0,55,67,0,
+    0,55,64,0,
+    0,60,65,0,
+    0,60,67,0,
+};
+
+const uint8_t nyancat_measure6[52] = {
+    0,53,72,1,
+    0,57,67,0,
+    0,57,69,0,
+
+    0,60,72,1,
+    0,65,67,0,
+    0,65,69,0,
+
+    0,52,72,1,
+    0,55,74,0,
+    0,55,76,0,
+
+    0,60,72,0,
+    0,60,67,0,
+    0,64,69,0,
+    0,64,67,0,
+};
+
+const uint8_t nyancat_measure7[52] = {
+    0,50,72,1,
+    0,53,72,0,
+    0,53,71,0,
+
+    0,57,72,0,
+    0,57,67,0,
+    0,62,69,0,
+    0,62,72,0,
+
+    0,48,77,0,
+    0,48,76,0,
+    0,52,77,0,
+    0,52,79,0,
+
+    0,55,72,1,
+    0,60,71,1,
+};
+
+const uint8_t nyancat_measure8[52] = {
+    0,50,72,1,
+    0,53,72,0,
+    0,53,71,0,
+
+    0,57,72,0,
+    0,57,67,0,
+    0,62,69,0,
+    0,62,72,0,
+
+    0,48,77,0,
+    0,48,76,0,
+    0,52,77,0,
+    0,52,79,0,
+
+    0,55,72,1,
+    0,60,74,1,
+};
+
+const uint8_t nyancat_sequence[NYANCAT_SEQUENCES] = {
+    0,1,2,3,0,1,2,3,4,5,6,7,4,5,6,8
+};
+
+const uint8_t* nyancat_measures[NYANCAT_MEASURES] = {
+    nyancat_measure0,
+    nyancat_measure1,
+    nyancat_measure2,
+    nyancat_measure3,
+    nyancat_measure4,
+    nyancat_measure5,
+    nyancat_measure6,
+    nyancat_measure7,
+    nyancat_measure8,
 };
 
 uint32_t play_next_note(uint8_t measure_index, uint8_t note_index, uint8_t *next_note)
 {
     uint32_t duration = 0;
-    uint8_t  mario_index = 0;
+    uint8_t  nyancat_index = 0;
     uint8_t  voice_index = 0;
 
     *next_note = 0;
@@ -46,15 +226,15 @@ uint32_t play_next_note(uint8_t measure_index, uint8_t note_index, uint8_t *next
         return duration;
     }
 
-    mario_index = note_index * 4;
-    if (mario_index < mario_array_limits[measure_index])
+    nyancat_index = note_index * 4;
+    if (nyancat_index < nyancat_measure_limits[measure_index])
     {
         for (voice_index = 0; voice_index < 3; voice_index++)
         {
-            sound_set_note(mario_measures[measure_index][mario_index+voice_index],voice_index);
+            sound_set_note(nyancat_measures[measure_index][nyancat_index+voice_index],voice_index);
         }
 
-        duration = mario_tempos[mario_measures[measure_index][mario_index+3]];
+        duration = nyancat_durations[nyancat_measures[measure_index][nyancat_index+3]];
         *next_note = note_index+1;
     }
 
@@ -101,7 +281,6 @@ void user_program_loop(void)
     // Each note is a set of three frequencies to be held fof a specific time.
     uint32_t time_for_audio_update = millis();
     uint8_t audio_state = 0;
-    uint8_t next_audio_state = 0;
     uint8_t measure_index = 0;
     uint8_t note_index = 0;
     uint8_t next_note = 0;
@@ -175,13 +354,16 @@ void user_program_loop(void)
         {
             if (audio_state != 0xFF)
             {
-                measure_index = mario_state_measures[audio_state];
-                next_audio_state = mario_state_next[audio_state];
+                measure_index = nyancat_sequence[audio_state];
 
                 time_for_audio_update += play_next_note(measure_index,note_index,&next_note);
                 if (next_note==0)
                 {
-                    audio_state = next_audio_state;
+                    audio_state++;
+                    if (audio_state >= NYANCAT_SEQUENCES)
+                    {
+                        audio_state = 0;
+                    }
                 }
                 note_index = next_note;
             }
